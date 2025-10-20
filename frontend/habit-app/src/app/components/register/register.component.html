@@ -1,0 +1,93 @@
+<div class="auth-container gradient-bg">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="auth-card fade-in">
+          <div class="text-center mb-4">
+            <h1 class="display-4">🌱</h1>
+            <h2 class="fw-bold text-success">Únete a Habit Tracker</h2>
+            <p class="text-muted">Comienza tu viaje hacia mejores hábitos</p>
+          </div>
+
+          <form (ngSubmit)="onRegister()">
+            <div class="mb-3">
+              <label for="email" class="form-label fw-semibold">Email</label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                [(ngModel)]="email"
+                name="email"
+                placeholder="tu@email.com"
+                required>
+            </div>
+
+            <div class="mb-3">
+              <label for="username" class="form-label fw-semibold">Usuario</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="username" 
+                [(ngModel)]="username"
+                name="username"
+                placeholder="Elige un nombre de usuario"
+                required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label fw-semibold">Contraseña</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                [(ngModel)]="password"
+                name="password"
+                placeholder="Mínimo 6 caracteres"
+                required>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label fw-semibold">Confirmar Contraseña</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="confirmPassword" 
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                placeholder="Repite tu contraseña"
+                required>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+
+            <div class="alert alert-success" *ngIf="successMessage">
+              {{ successMessage }}
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-gradient w-100 py-3 mb-3 fw-semibold"
+              [disabled]="loading">
+              <span *ngIf="!loading">Crear Cuenta 🎉</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Creando cuenta...
+              </span>
+            </button>
+          </form>
+
+          <div class="text-center">
+            <p class="text-muted mb-0">
+              ¿Ya tienes cuenta? 
+              <a routerLink="/login" class="text-success text-decoration-none fw-bold">
+                Inicia sesión
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm fade-in">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-4 fw-bold">
+          <span style="font-size: 1.5rem;">➕</span> Crear Nuevo Hábito
+        </h5>
+
+        <form (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label for="name" class="form-label fw-semibold">Nombre del Hábito *</label>
+              <input 
+                type="text" 
+                class="form-control form-control-lg" 
+                id="name" 
+                [(ngModel)]="habit.name"
+                name="name"
+                placeholder="Ej: Hacer ejercicio, Leer 30 minutos, Meditar..."
+                required>
+            </div>
+
+            <div class="col-md-4">
+              <label for="goal" class="form-label fw-semibold">Meta Semanal</label>
+              <select 
+                class="form-select form-select-lg" 
+                id="goal"
+                [(ngModel)]="habit.goal_frequency"
+                name="goal_frequency">
+                <option [value]="1">1 vez/semana</option>
+                <option [value]="2">2 veces/semana</option>
+                <option [value]="3">3 veces/semana</option>
+                <option [value]="4">4 veces/semana</option>
+                <option [value]="5">5 veces/semana</option>
+                <option [value]="6">6 veces/semana</option>
+                <option [value]="7">Todos los días</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label for="description" class="form-label fw-semibold">Descripción (opcional)</label>
+              <textarea 
+                class="form-control" 
+                id="description" 
+                rows="2"
+                [(ngModel)]="habit.description"
+                name="description"
+                placeholder="Detalles adicionales sobre este hábito..."></textarea>
+            </div>
+
+            <div class="col-md-6">
+              <label for="category" class="form-label fw-semibold">Categoría</label>
+              <select 
+                class="form-select form-select-lg" 
+                id="category"
+                [(ngModel)]="habit.category"
+                name="category"
+                (change)="onCategoryChange()">
+                <option *ngFor="let cat of categories" [value]="cat.value">
+                  {{ cat.label }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="color" class="form-label fw-semibold">Color</label>
+              <div class="d-flex gap-2 align-items-center">
+                <input 
+                  type="color" 
+                  class="form-control form-control-color form-control-lg" 
+                  id="color"
+                  [(ngModel)]="habit.color"
+                  name="color"
+                  style="width: 80px;">
+                <div class="d-flex gap-2 flex-wrap">
+                  <button 
+                    type="button"
+                    *ngFor="let color of colors"
+                    class="btn btn-sm"
+                    [style.background-color]="color"
+                    [style.width]="'35px'"
+                    [style.height]="'35px'"
+                    [style.border]="habit.color === color ? '3px solid #000' : 'none'"
+                    (click)="habit.color = color">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <div class="d-grid gap-2 mt-4">
+            <button 
+              type="submit" 
+              class="btn btn-gradient btn-lg fw-semibold"
+              [disabled]="loading">
+              <span *ngIf="!loading">🎯 Crear Hábito</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Creando...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

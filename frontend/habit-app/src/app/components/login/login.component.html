@@ -1,0 +1,65 @@
+<div class="auth-container gradient-bg">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-lg-4">
+        <div class="auth-card fade-in">
+          <div class="text-center mb-4">
+            <h1 class="display-4">🌱</h1>
+            <h2 class="fw-bold text-success">Habit Tracker</h2>
+            <p class="text-muted">Construye mejores hábitos, un día a la vez</p>
+          </div>
+
+          <form (ngSubmit)="onLogin()">
+            <div class="mb-3">
+              <label for="username" class="form-label fw-semibold">Usuario</label>
+              <input 
+                type="text" 
+                class="form-control form-control-lg" 
+                id="username" 
+                [(ngModel)]="username"
+                name="username"
+                placeholder="Tu nombre de usuario"
+                required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label fw-semibold">Contraseña</label>
+              <input 
+                type="password" 
+                class="form-control form-control-lg" 
+                id="password" 
+                [(ngModel)]="password"
+                name="password"
+                placeholder="Tu contraseña"
+                required>
+            </div>
+
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-gradient w-100 py-3 mb-3 fw-semibold"
+              [disabled]="loading">
+              <span *ngIf="!loading">Iniciar Sesión 🚀</span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Iniciando...
+              </span>
+            </button>
+          </form>
+
+          <div class="text-center">
+            <p class="text-muted mb-0">
+              ¿Nuevo aquí? 
+              <a routerLink="/register" class="text-success text-decoration-none fw-bold">
+                Crea tu cuenta
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

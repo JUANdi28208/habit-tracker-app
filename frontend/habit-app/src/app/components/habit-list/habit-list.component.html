@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        <h5 class="mb-0 text-white fw-bold">📋 Mis Hábitos</h5>
+      </div>
+      <div class="card-body">
+        <div *ngIf="habits.length === 0" class="text-center py-5">
+          <div class="mb-3" style="font-size: 4rem;">🌱</div>
+          <h5 class="text-muted">No tienes hábitos aún</h5>
+          <p class="text-muted">¡Crea tu primer hábito y comienza tu viaje!</p>
+        </div>
+
+        <div class="row g-3" *ngIf="habits.length > 0">
+          <div class="col-md-6 col-lg-4" *ngFor="let habit of habits">
+            <div class="habit-card card h-100" [style.border-left-color]="habit.color">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div class="flex-grow-1">
+                    <h6 class="mb-2 fw-bold">{{ habit.name }}</h6>
+                    <p class="text-muted small mb-2" *ngIf="habit.description">
+                      {{ habit.description }}
+                    </p>
+                    <span [class]="'category-badge ' + getCategoryClass(habit.category)">
+                      {{ habit.category }}
+                    </span>
+                  </div>
+                  <button 
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteHabit(habit.id!)"
+                    title="Eliminar">
+                    🗑️
+                  </button>
+                </div>
+
+                <div class="d-grid gap-2">
+                  <button 
+                    class="btn btn-success fw-semibold"
+                    (click)="toggleToday(habit)">
+                    ✓ Marcar Hoy
+                  </button>
+                  <button 
+                    class="btn btn-outline-primary btn-sm"
+                    (click)="selectHabit(habit)">
+                    📊 Ver Estadísticas
+                  </button>
+                </div>
+
+                <div class="mt-3 small text-muted">
+                  Meta: {{ habit.goal_frequency }} veces/semana
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Estadísticas (opcional) -->
+<app-habit-stats 
+  *ngIf="selectedHabit" 
+  [habit]="selectedHabit"
+  (close)="selectedHabit = null">
+</app-habit-stats>
+
+<!-- Calendario Heatmap (opcional) -->
+<app-habit-calendar 
+  *ngIf="selectedHabit" 
+  [habit]="selectedHabit">
+</app-habit-calendar>
