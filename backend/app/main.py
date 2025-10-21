@@ -1,10 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.database.database import Base, engine
 from app.routes import auth, habits, logs, stats
 from app.models import models
-
+import logging
 import time
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Habit Tracker API",
@@ -15,7 +19,7 @@ app = FastAPI(
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "http://frontend:80"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,16 +33,24 @@ def startup_event():
     while retry_count < max_retries:
         try:
             Base.metadata.create_all(bind=engine)
-            print("Database tables created successfully!")
+            logger.info("Database tables created successfully!")
             break
         except Exception as e:
             retry_count += 1
-            print(f"Failed to create tables (attempt {retry_count}/{max_retries}): {e}")
+            logger.error(f"Failed to create tables (attempt {retry_count}/{max_retries}): {str(e)}")
             if retry_count < max_retries:
                 time.sleep(5)
             else:
-                print("Max retries reached. Exiting...")
+                logger.error("Max retries reached. Exiting...")
                 raise
+
+# Middleware para logging de requests
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    logger.info(f"Outgoing response: Status {response.status_code}")
+    return response
 
 # Incluir todas las rutas
 app.include_router(auth.router)

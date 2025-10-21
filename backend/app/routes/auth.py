@@ -11,33 +11,39 @@ from app.auth.auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
     get_current_active_user
 )
+import logging
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user: UserCreate, db: Session = Depends(get_db)):
     """Registrar un nuevo usuario"""
+    try:
     # Verificar si el email ya existe
-    db_user = db.query(User).filter(User.email == user.email).first()
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    # Verificar si el username ya existe
-    db_user = db.query(User).filter(User.username == user.username).first()
-    if db_user:
-        raise HTTPException(status_code=400, detail="Username already taken")
-    
-    # Crear nuevo usuario
-    hashed_password = get_password_hash(user.password)
-    new_user = User(
-        email=user.email,
-        username=user.username,
-        hashed_password=hashed_password
-    )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+            db_user = db.query(User).filter(User.email == user.email).first()
+            if db_user:
+                raise HTTPException(status_code=400, detail="Email already registered")
+            
+            # Verificar si el username ya existe
+            db_user = db.query(User).filter(User.username == user.username).first()
+            if db_user:
+                raise HTTPException(status_code=400, detail="Username already taken")
+            
+            # Crear nuevo usuario
+            hashed_password = get_password_hash(user.password)
+            new_user = User(
+                email=user.email,
+                username=user.username,
+                hashed_password=hashed_password
+            )
+            db.add(new_user)
+            db.commit()
+            db.refresh(new_user)
+            return new_user
+    except Exception as e:
+        logging.error(f"Error during registration: {str(e)}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail="An error occurred during registration")
 
 @router.post("/login", response_model=Token)
 def login(login_data: LoginRequest, db: Session = Depends(get_db)):

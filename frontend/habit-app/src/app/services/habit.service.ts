@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment'; 
 
 // Interfaces
 export interface Habit {
@@ -29,7 +30,7 @@ export enum Category {
   providedIn: 'root'
 })
 export class HabitService {
-  private apiUrl = 'http://localhost:8000/api'; // Ajusta según tu backend
+  private apiUrl = `${environment.apiUrl}/api/habits`; 
 
   constructor(private http: HttpClient) {}
 

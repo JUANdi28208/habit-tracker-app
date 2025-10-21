@@ -30,7 +30,7 @@ services:
     container_name: habit_backend
     restart: always
     ports:
-      - "8002:8000"
+      - "8000:8000"
     environment:
       DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE}
       SECRET_KEY: ${SECRET_KEY}
