@@ -1,11 +1,18 @@
-<div class="min-vh-100" style="background: #f8f9fa;">
+<div class="min-vh-100" style="background: #f8f9fa">
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+  <nav
+    class="navbar navbar-expand-lg"
+    style="background: linear-gradient(135deg, #10b981 0%, #059669 100%)"
+  >
     <div class="container-fluid px-4">
       <a class="navbar-brand text-white fw-bold fs-4" href="#">
         <span class="fs-3">🌱</span> Habit Tracker
       </a>
       <div class="d-flex align-items-center gap-3">
+        <!-- Agregando botón de logros en navbar -->
+        <button class="btn btn-outline-light" (click)="goToAchievements()">
+          🏆 Logros
+        </button>
         <span class="text-white d-none d-md-block">
           Hola, <strong>{{ currentUser?.username }}</strong> 👋
         </span>
@@ -17,6 +24,58 @@
   </nav>
 
   <div class="container-fluid px-4 py-4">
+    <!-- Tarjeta de Gamificación -->
+    <div class="row g-4 mb-4" *ngIf="userStats">
+      <div class="col-12">
+        <div class="gamification-card">
+          <div class="row align-items-center">
+            <div class="col-md-3 text-center">
+              <div class="level-badge">
+                <div class="level-number">{{ userStats.level }}</div>
+                <div class="level-label">Nivel</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-2">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="fw-semibold">Progreso al siguiente nivel</span>
+                  <span class="text-muted"
+                    >{{ userStats.points }} /
+                    {{ userStats.points_to_next_level }} pts</span
+                  >
+                </div>
+                <div class="progress" style="height: 20px">
+                  <div
+                    class="progress-bar bg-success"
+                    [style.width.%]="
+                      (userStats.points / userStats.points_to_next_level) * 100
+                    "
+                  ></div>
+                </div>
+              </div>
+              <div
+                class="motivational-phrase text-center fst-italic text-muted mt-3"
+              >
+                "{{ userStats.motivational_phrase }}"
+              </div>
+            </div>
+            <div class="col-md-3 text-center">
+              <button
+                class="btn btn-success btn-lg w-100"
+                (click)="goToAchievements()"
+              >
+                Ver Todos los Logros
+              </button>
+
+              <div class="mt-2 text-muted">
+                {{ userStats.unlocked_achievements }} logros desbloqueados
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Stats Cards -->
     <div class="row g-4 mb-4" *ngIf="stats">
       <div class="col-md-3">
@@ -48,7 +107,10 @@
     <!-- Botón Nuevo Hábito -->
     <div class="row mb-4">
       <div class="col-12">
-        <button class="btn btn-gradient btn-lg w-100 fw-semibold" (click)="toggleHabitForm()">
+        <button
+          class="btn btn-gradient btn-lg w-100 fw-semibold"
+          (click)="toggleHabitForm()"
+        >
           <span *ngIf="!showHabitForm">➕ Crear Nuevo Hábito</span>
           <span *ngIf="showHabitForm">❌ Cancelar</span>
         </button>
@@ -56,15 +118,11 @@
     </div>
 
     <!-- Formulario de Hábito -->
-    <app-habit-form 
-      *ngIf="showHabitForm" 
-      (habitCreated)="onHabitCreated()">
+    <app-habit-form *ngIf="showHabitForm" (habitCreated)="onHabitCreated()">
     </app-habit-form>
 
     <!-- Lista de Hábitos -->
-    <app-habit-list 
-      [habits]="habits" 
-      (habitsChanged)="loadData()">
+    <app-habit-list [habits]="habits" (habitsChanged)="loadData()">
     </app-habit-list>
   </div>
 </div>

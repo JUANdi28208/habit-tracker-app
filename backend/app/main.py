@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.database.database import Base, engine
-from app.routes import auth, habits, logs, stats
+from app.routes import auth, habits, logs, stats, achievements
 from app.models import models
 import logging
 import time
@@ -57,6 +57,7 @@ app.include_router(auth.router)
 app.include_router(habits.router)
 app.include_router(logs.router)
 app.include_router(stats.router)
+app.include_router(achievements.router)
 
 @app.get("/")
 def read_root():

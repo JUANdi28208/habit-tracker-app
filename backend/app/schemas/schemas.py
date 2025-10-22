@@ -14,6 +14,15 @@ class CategoryEnum(str, Enum):
     creativity = "creativity"
     other = "other"
 
+class AchievementTypeEnum(str, Enum):
+    first_day = "first_day"
+    streak_7 = "streak_7"
+    streak_30 = "streak_30"
+    month_complete = "month_complete"
+    habit_master = "habit_master"
+    category_expert = "category_expert"
+    points_milestone = "points_milestone"
+
 # User Schemas
 class UserBase(BaseModel):
     email: EmailStr
@@ -98,6 +107,16 @@ class OverallStats(BaseModel):
     average_completion_rate: float
     best_streak: int
 
+class UserStatsResponse(BaseModel):
+    id: int
+    username: str
+    points: int
+    level: int
+    total_achievements: int
+    
+    class Config:
+        from_attributes = True
+
 # Auth Schemas
 class Token(BaseModel):
     access_token: str
@@ -109,3 +128,44 @@ class TokenData(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+class AchievementBase(BaseModel):
+    name: str
+    description: Optional[str] = None
+    achievement_type: AchievementTypeEnum
+    category: Optional[CategoryEnum] = None
+    points_reward: int = 10
+    icon: str = "trophy"
+    requirement_value: int = 1
+
+class AchievementResponse(AchievementBase):
+    id: int
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class UserAchievementResponse(BaseModel):
+    id: int
+    achievement: AchievementResponse
+    unlocked_at: datetime
+    progress: int
+    
+    class Config:
+        from_attributes = True
+
+class StreakRecoveryRequest(BaseModel):
+    habit_id: int
+    use_points: bool = True
+    mission_completed: bool = False
+
+class StreakRecoveryResponse(BaseModel):
+    id: int
+    habit_id: int
+    recovery_date: date
+    points_spent: int
+    mission_completed: bool
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True

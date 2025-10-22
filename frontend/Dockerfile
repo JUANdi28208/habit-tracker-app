@@ -3,7 +3,7 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY habit-app/package*.json ./
+COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
 RUN npm install -g @angular/cli@16.2.16
