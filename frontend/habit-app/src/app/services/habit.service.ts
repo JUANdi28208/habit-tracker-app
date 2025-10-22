@@ -36,22 +36,22 @@ export class HabitService {
 
   // Métodos CRUD
   getHabits(): Observable<Habit[]> {
-    return this.http.get<Habit[]>(`${this.apiUrl}/habits`);
+    return this.http.get<Habit[]>(`${this.apiUrl}`);
   }
 
   createHabit(habit: Habit): Observable<Habit> {
-    return this.http.post<Habit>(`${this.apiUrl}/habits`, habit);
+    return this.http.post<Habit>(`${this.apiUrl}`, habit);
   }
 
   updateHabit(id: number, habit: Habit): Observable<Habit> {
-    return this.http.put<Habit>(`${this.apiUrl}/habits/${id}`, habit);
+    return this.http.put<Habit>(`${this.apiUrl}/${id}`, habit);
   }
 
   deleteHabit(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/habits/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
   getHabit(id: number): Observable<Habit> {
-    return this.http.get<Habit>(`${this.apiUrl}/habits/${id}`);
+    return this.http.get<Habit>(`${this.apiUrl}/${id}`);
   }
 }

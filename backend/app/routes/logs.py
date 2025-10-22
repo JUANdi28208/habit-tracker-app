@@ -9,7 +9,7 @@ from app.auth.auth import get_current_active_user
 
 router = APIRouter(prefix="/api/logs", tags=["Habit Logs"])
 
-@router.get("/habit/{habit_id}", response_model=List[HabitLogResponse])
+@router.get("/habits/{habit_id}/logs", response_model=List[HabitLogResponse])
 def get_habit_logs(
     habit_id: int,
     days: int = 30,
@@ -31,7 +31,7 @@ def get_habit_logs(
     ).order_by(HabitLog.date.desc()).all()
     return logs
 
-@router.post("/habit/{habit_id}", response_model=HabitLogResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/habits/{habit_id}/logs", response_model=HabitLogResponse, status_code=status.HTTP_201_CREATED)
 def create_habit_log(
     habit_id: int,
     log: HabitLogCreate,
@@ -102,7 +102,7 @@ def delete_habit_log(
     db.commit()
     return None
 
-@router.post("/habit/{habit_id}/toggle/{log_date}", response_model=HabitLogResponse)
+@router.post("/habits/{habit_id}/toggle/{log_date}", response_model=HabitLogResponse)
 def toggle_habit_log(
     habit_id: int,
     log_date: date,

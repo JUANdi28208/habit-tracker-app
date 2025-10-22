@@ -1,1 +1,74 @@
-<p>habit-calendar works!</p>
+<div class="calendar-container mt-4" *ngIf="habit">
+  <div class="card">
+    <div class="card-header" [style.background]="habit.color">
+      <h5 class="mb-0 text-white">
+        📅 Calendario de {{ habit.name }}
+      </h5>
+      <p class="mb-0 text-white-50 small">Últimos 90 días</p>
+    </div>
+
+    <div class="card-body">
+      <!-- Leyenda -->
+      <div class="legend mb-4">
+        <span class="legend-item">
+          <span class="legend-box level-0"></span>
+          Sin completar
+        </span>
+        <span class="legend-item">
+          <span class="legend-box level-4"></span>
+          Completado
+        </span>
+      </div>
+
+      <!-- Loading -->
+      <div class="text-center py-4" *ngIf="loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+
+      <!-- Heatmap -->
+      <div class="heatmap" *ngIf="!loading">
+        <div class="heatmap-row" *ngFor="let week of weeks">
+          <div 
+            *ngFor="let day of week"
+            class="heatmap-cell"
+            [ngClass]="getHeatmapClass(day)"
+            [title]="getTooltip(day)"
+            (click)="toggleDay(day)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="info-section mt-4">
+        <div class="row g-3">
+          <div class="col-6 col-md-3">
+            <div class="info-box">
+              <div class="info-number">{{ totalCompleted }}</div>
+              <div class="info-label">Días completados</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="info-box">
+              <div class="info-number text-warning">{{ currentStreak }}🔥</div>
+              <div class="info-label">Racha actual</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="info-box">
+              <div class="info-number text-success">{{ completionRate }}%</div>
+              <div class="info-label">Tasa cumplimiento</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="info-box">
+              <div class="info-number text-info">{{ habit.goal_frequency }}</div>
+              <div class="info-label">Meta semanal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

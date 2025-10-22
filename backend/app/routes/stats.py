@@ -10,7 +10,7 @@ from app.utils.helpers import calculate_streak, calculate_longest_streak, calcul
 
 router = APIRouter(prefix="/api/stats", tags=["Statistics"])
 
-@router.get("/habit/{habit_id}", response_model=HabitStats)
+@router.get("/habits/{habit_id}", response_model=HabitStats)
 def get_habit_stats(
     habit_id: int,
     db: Session = Depends(get_db),
