@@ -1,17 +1,22 @@
+<!-- Navbar -->
+<app-navbar></app-navbar>
+
 <div class="achievements-container">
   <!-- User Stats Card -->
   <div class="stats-card" *ngIf="userStats">
     <div class="stats-header">
       <button
-          class="btn btn-outline-light"
-          (click)="goBack()"
-          title="Volver atrás"
-        >
-          ← Volver
-        </button>
+        class="btn btn-outline-light"
+        (click)="goBack()"
+        title="Volver atrás"
+      >
+        ← Volver
+      </button>
       <div class="user-info">
         <h2>{{ userStats.username }}</h2>
-        <p class="level-title">{{ getLevelTitle() }} - Nivel {{ userStats.level }}</p>
+        <p class="level-title">
+          {{ getLevelTitle() }} - Nivel {{ userStats.level }}
+        </p>
       </div>
       <div class="points-badge">
         <span class="points-value">{{ userStats.points }}</span>
@@ -23,7 +28,9 @@
       <div class="progress-bar">
         <div class="progress-fill" [style.width.%]="levelProgress"></div>
       </div>
-      <p class="progress-text">{{ pointsForNextLevel }} puntos para el siguiente nivel</p>
+      <p class="progress-text">
+        {{ pointsForNextLevel }} puntos para el siguiente nivel
+      </p>
     </div>
 
     <div class="motivational-phrase">
@@ -52,16 +59,18 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <button 
-      class="tab-btn" 
+    <button
+      class="tab-btn"
       [class.active]="selectedTab === 'unlocked'"
-      (click)="selectTab('unlocked')">
+      (click)="selectTab('unlocked')"
+    >
       Desbloqueados ({{ userAchievements.length }})
     </button>
-    <button 
-      class="tab-btn" 
+    <button
+      class="tab-btn"
       [class.active]="selectedTab === 'all'"
-      (click)="selectTab('all')">
+      (click)="selectTab('all')"
+    >
       Todos ({{ allAchievements.length }})
     </button>
   </div>
@@ -73,14 +82,26 @@
 
   <!-- Unlocked Achievements -->
   <div class="achievements-grid" *ngIf="!loading && selectedTab === 'unlocked'">
-    <div class="achievement-card unlocked" *ngFor="let userAchievement of userAchievements">
-      <div class="achievement-icon">{{ getAchievementIcon(userAchievement.achievement.icon) }}</div>
+    <div
+      class="achievement-card unlocked"
+      *ngFor="let userAchievement of userAchievements"
+    >
+      <div class="achievement-icon">
+        {{ getAchievementIcon(userAchievement.achievement.icon) }}
+      </div>
       <div class="achievement-content">
         <h3>{{ userAchievement.achievement.name }}</h3>
-        <p class="achievement-description">{{ userAchievement.achievement.description }}</p>
+        <p class="achievement-description">
+          {{ userAchievement.achievement.description }}
+        </p>
         <div class="achievement-footer">
-          <span class="points-reward">+{{ userAchievement.achievement.points_reward }} puntos</span>
-          <span class="unlocked-date">Desbloqueado: {{ getUnlockedDate(userAchievement.achievement.id) }}</span>
+          <span class="points-reward"
+            >+{{ userAchievement.achievement.points_reward }} puntos</span
+          >
+          <span class="unlocked-date"
+            >Desbloqueado:
+            {{ getUnlockedDate(userAchievement.achievement.id) }}</span
+          >
         </div>
       </div>
     </div>
@@ -93,21 +114,32 @@
 
   <!-- All Achievements -->
   <div class="achievements-grid" *ngIf="!loading && selectedTab === 'all'">
-    <div 
-      class="achievement-card" 
+    <div
+      class="achievement-card"
       [class.unlocked]="isAchievementUnlocked(achievement.id)"
       [class.locked]="!isAchievementUnlocked(achievement.id)"
-      *ngFor="let achievement of allAchievements">
-      <div class="achievement-icon">{{ getAchievementIcon(achievement.icon) }}</div>
+      *ngFor="let achievement of allAchievements"
+    >
+      <div class="achievement-icon">
+        {{ getAchievementIcon(achievement.icon) }}
+      </div>
       <div class="achievement-content">
         <h3>{{ achievement.name }}</h3>
         <p class="achievement-description">{{ achievement.description }}</p>
         <div class="achievement-footer">
-          <span class="points-reward">+{{ achievement.points_reward }} puntos</span>
-          <span class="requirement" *ngIf="!isAchievementUnlocked(achievement.id)">
+          <span class="points-reward"
+            >+{{ achievement.points_reward }} puntos</span
+          >
+          <span
+            class="requirement"
+            *ngIf="!isAchievementUnlocked(achievement.id)"
+          >
             Requisito: {{ achievement.requirement_value }}
           </span>
-          <span class="unlocked-badge" *ngIf="isAchievementUnlocked(achievement.id)">
+          <span
+            class="unlocked-badge"
+            *ngIf="isAchievementUnlocked(achievement.id)"
+          >
             Desbloqueado
           </span>
         </div>

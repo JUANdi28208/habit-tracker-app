@@ -1,0 +1,36 @@
+<nav
+  class="navbar navbar-expand-lg"
+  style="background: linear-gradient(135deg, #10b981 0%, #059669 100%)"
+>
+  <div class="container-fluid px-4">
+    <a class="navbar-brand text-white fw-bold fs-4" href="#">
+      <span class="fs-3">🌱</span> Habit Tracker
+    </a>
+
+    <div class="d-flex align-items-center gap-3 ms-auto">
+      <button
+        *ngIf="backButton"
+        class="btn btn-outline-light"
+        (click)="goBack()"
+      >
+        ← Volver
+      </button>
+
+      <button
+        *ngIf="showAchievementsButton"
+        class="btn btn-outline-light"
+        (click)="goToAchievements()"
+      >
+        🏆 Logros
+      </button>
+
+      <span class="text-white d-none d-md-block">
+        Hola, <strong>{{ currentUser?.username }}</strong> 👋
+      </span>
+
+      <button class="btn btn-outline-light" (click)="logout()">
+        Cerrar Sesión
+      </button>
+    </div>
+  </div>
+</nav>

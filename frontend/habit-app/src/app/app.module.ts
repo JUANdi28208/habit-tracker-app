@@ -13,6 +13,7 @@ import { HabitFormComponent } from './components/habit-form/habit-form.component
 import { HabitCalendarComponent } from './components/habit-calendar/habit-calendar.component';
 import { HabitStatsComponent } from './components/habit-stats/habit-stats.component';
 import { AchievementsComponent } from './components/achievements/achievements.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { AuthInterceptor } from './insterceptors/auth.interceptor';
 
@@ -26,22 +27,23 @@ import { AuthInterceptor } from './insterceptors/auth.interceptor';
     HabitFormComponent,
     HabitCalendarComponent,
     HabitStatsComponent,
-    AchievementsComponent
+    AchievementsComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

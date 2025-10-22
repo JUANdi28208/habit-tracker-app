@@ -76,12 +76,4 @@ export class DashboardComponent implements OnInit {
     this.showHabitForm = false;
     this.loadData();
   }
-
-  goToAchievements(): void {
-    this.router.navigate(['/achievements']);
-  }
-
-  logout(): void {
-    this.authService.logout();
-  }
 }
