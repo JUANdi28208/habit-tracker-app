@@ -44,7 +44,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -124,6 +123,9 @@
           }
         }
       }
-    }},
-  "defaultProject": "habit-app"
+    }
+  },
+  "cli": {
+    "analytics": "4d6875bc-e699-4eba-921d-77ce719bcba4"
+  }
 }
